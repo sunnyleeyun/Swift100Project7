@@ -64,11 +64,26 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
   func numberOfSections(in tableView: UITableView) -> Int {
     return movieKey.count
   }
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    if let rows = movie[movieKey[section]]?.count{
+      return rows
+    }
+    return 0
+  }
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    <#code#>
+    let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+    
+    // Configure the cell...
+    if let array = movie[movieKey[indexPath.section]] {
+      cell.textLabel?.text = array[indexPath.row]
+    } else {
+      cell.textLabel?.text = ""
+    }
+    
+    return cell
   }
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    <#code#>
+    return movieKey[section]
   }
 }
 
